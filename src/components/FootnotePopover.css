@@ -1,0 +1,93 @@
+.footnote-popover {
+  position: fixed;
+  z-index: 10000;
+  max-width: 400px;
+  min-width: 250px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  font-size: 0.9em;
+  line-height: 1.6;
+  animation: fadeInPopover 0.2s ease-out;
+  font-family: Georgia, serif;
+}
+
+.footnote-popover-dark {
+  background-color: #2a2a2a;
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+@keyframes fadeInPopover {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footnote-popover-content {
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.footnote-popover-dark .footnote-popover-content {
+  color: #e0e0e0;
+}
+
+.footnote-popover-content p {
+  margin: 0 0 0.5em 0;
+}
+
+.footnote-popover-content p:last-child {
+  margin-bottom: 0;
+}
+
+.footnote-popover-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  color: #666666;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+  line-height: 1;
+}
+
+.footnote-popover-dark .footnote-popover-close {
+  color: #b0b0b0;
+}
+
+.footnote-popover-close:hover {
+  background-color: #f0f0f0;
+  color: #333333;
+}
+
+.footnote-popover-dark .footnote-popover-close:hover {
+  background-color: #404040;
+  color: #e0e0e0;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .footnote-popover {
+    max-width: calc(100vw - 40px);
+    min-width: 200px;
+    padding: 12px;
+    font-size: 0.85em;
+  }
+}
