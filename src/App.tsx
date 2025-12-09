@@ -125,7 +125,6 @@ export default function App() {
         }
       }
      
-      debugger
       textNodes.forEach((textNode) => {
         const text = textNode.textContent || ''
         if (text.includes(placeholder)) {

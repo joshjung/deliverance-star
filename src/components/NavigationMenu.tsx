@@ -38,7 +38,7 @@ function NavigationMenu({ isOpen, onClose, contentTree, onNavigate, theme, onTog
       <div className="nav-overlay" onClick={onClose}></div>
       <nav className={`nav-menu ${isOpen ? 'nav-menu-open' : ''}`}>
         <div className="nav-header">
-          <h2>Table of Contents</h2>
+          <h2>Deliverance Star</h2>
           <div className="nav-header-actions">
             <button
               className="theme-toggle"
