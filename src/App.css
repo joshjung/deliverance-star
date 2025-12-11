@@ -10,11 +10,50 @@
   background-color: #1a1a1a;
 }
 
-.hamburger-menu-button {
+.top-left-controls {
   position: fixed;
   top: 20px;
   left: 20px;
   z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.top-left-controls-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.top-left-controls-auto-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reading-progress {
+  background-color: rgba(255, 250, 205, 0.95);
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333333;
+  min-width: 50px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s, border-color 0.3s, color 0.3s;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+[data-theme='dark'] .reading-progress {
+  background-color: rgba(26, 26, 26, 0.95);
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+.hamburger-menu-button {
   width: 40px;
   height: 40px;
   background-color: rgba(255, 250, 205, 0.95);
@@ -28,13 +67,7 @@
   gap: 5px;
   padding: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s, border-color 0.3s, opacity 0.2s, visibility 0.2s;
-}
-
-.hamburger-menu-button-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  transition: background-color 0.2s, border-color 0.3s;
 }
 
 [data-theme='dark'] .hamburger-menu-button {
@@ -66,7 +99,7 @@
 }
 
 .book-content {
-  max-width: 800px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 40px 20px;
   padding-top: 80px;
@@ -170,6 +203,55 @@
   margin-bottom: 1em;
   font-size: 1.1em;
   line-height: 1.8;
+  padding: 0.5em 0.75em;
+  margin-left: -0.75em;
+  margin-right: -0.75em;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.book-content p:hover {
+  background-color: rgba(255, 240, 180, 0.6);
+}
+
+[data-theme='dark'] .book-content p:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.book-content p.paragraph-highlighted {
+  outline: 2px solid rgba(0, 102, 204, 0.5);
+  outline-offset: 2px;
+  background-color: rgba(255, 240, 180, 0.4);
+  transition: outline 0.3s ease, background-color 0.2s ease;
+}
+
+[data-theme='dark'] .book-content p.paragraph-highlighted {
+  outline: 2px solid rgba(74, 158, 255, 0.6);
+  outline-offset: 2px;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.book-content .paragraph-anchor {
+  display: inline-block;
+  opacity: 0;
+  margin-right: 0.5em;
+  text-decoration: none;
+  font-size: 0.9em;
+  vertical-align: baseline;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.book-content p:hover .paragraph-anchor,
+.book-content .paragraph-anchor:hover {
+  opacity: 0.6;
+}
+
+.book-content .paragraph-anchor:hover {
+  opacity: 1;
 }
 
 .book-content ul,
@@ -306,9 +388,21 @@
 
 /* Mobile styles */
 @media (max-width: 768px) {
+  .top-left-controls {
+    top: auto;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 8px;
+  }
+
+  .reading-progress {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    min-width: 45px;
+  }
+
   .hamburger-menu-button {
-    top: 15px;
-    left: 15px;
     width: 36px;
     height: 36px;
   }

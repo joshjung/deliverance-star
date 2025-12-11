@@ -1,4 +1,4 @@
-import type { ContentTreeNode } from '../types'
+import type { ContentTreeNode } from '../types/types'
 import './NavigationMenu.css'
 
 interface NavigationMenuProps {

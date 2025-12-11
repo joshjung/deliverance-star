@@ -1,14 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
-import { marked } from 'marked'
 import NavigationMenu from './components/NavigationMenu'
 import FootnotePopover from './components/FootnotePopover'
-import bookContent from '../book.md?raw'
+import bookHtml from './generated/book.html?raw'
+import bookMetadata from './generated/book-metadata.json'
 import type { ContentTreeNode, Theme, Footnote } from './types/types'
 import './App.css'
 
 const THEME_KEY = 'bookTheme';
-const FOOTNOTE_REF_REGEX = /\[\^(\d+)\]/g; // [^1]
-const FOOTNOTE_CONTENT_REGEX = /\[(\d+)\]:([^\[]*?)\[\/(\d+)\]/g; // [1]: content [/1]
 
 export default function App() {
   const [contentTree, setContentTree] = useState<ContentTreeNode[]>([])
@@ -19,9 +17,12 @@ export default function App() {
   })
   const [footnotes, setFootnotes] = useState<Map<string, Footnote>>(new Map())
   const [activeFootnote, setActiveFootnote] = useState<{ id: string; position: { x: number; y: number } } | null>(null)
+  const [readingProgress, setReadingProgress] = useState<number>(0)
+  const [controlsVisible, setControlsVisible] = useState<boolean>(true)
   const contentRef = useRef<HTMLDivElement>(null)
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const hasRestoredScroll = useRef<boolean>(false)
+  const autoHideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -32,162 +33,170 @@ export default function App() {
     setTheme((prevTheme: Theme) => (prevTheme === 'light' ? 'dark' : 'light'))
   }
 
-  // Parse markdown and extract content tree
+  // Load pre-rendered HTML and metadata
   useEffect(() => {
-    // First, manually parse footnotes from the raw markdown
+    // Convert footnotes from plain object to Map
     const footnoteMap = new Map<string, Footnote>()
-    
-    // Extract footnote definitions: [^1]: content
-    const footnoteDefPattern = FOOTNOTE_CONTENT_REGEX
-    let defMatch
-    while ((defMatch = footnoteDefPattern.exec(bookContent)) !== null) {
-      const footnoteNumber = defMatch[1]
-      const footnoteId = `fn${footnoteNumber}`
-      const footnoteContent = defMatch[2].trim()
-      const footnoteHtml = marked.parse(footnoteContent) as string
-      footnoteMap.set(footnoteId, { id: footnoteId, content: footnoteHtml })
-    }
-    
-    // Replace footnote references [^1] with HTML placeholders before parsing
-    let processedContent = bookContent
-    const footnoteRefs: Array<{ placeholder: string; id: string; number: string }> = []
-    let footnoteRefIndex = 0
-    
-    processedContent = processedContent.replace(FOOTNOTE_REF_REGEX, (_match, number) => {
-      const footnoteId = `fn${number}`
-      const placeholder = footnoteId;
-      footnoteRefs.push({ placeholder, id: footnoteId, number })
-      footnoteRefIndex++
-      return placeholder
-    })
-    
-    processedContent = processedContent.replace(FOOTNOTE_CONTENT_REGEX, '')
-    
-    // Configure marked to add IDs to headings
-    marked.setOptions({
-      headerIds: true,
-      mangle: false
-    })
-
-    // Parse markdown to HTML
-    const html = marked.parse(processedContent) as string
-
-    // Extract headings to build content tree and ensure all have IDs
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(html, 'text/html')
-    const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6')
-    
-    const tree: ContentTreeNode[] = []
-    const idCounts: Record<string, number> = {}
-    
-    headings.forEach((heading) => {
-      const level = parseInt(heading.tagName.charAt(1), 10)
-      const text = heading.textContent?.trim() || ''
-      
-      // Generate ID from text if not present
-      let id = heading.id
-      if (!id) {
-        id = text.toLowerCase()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/\s+/g, '-')
-          .replace(/-+/g, '-')
-          .trim()
-      }
-      
-      // Ensure unique IDs
-      if (idCounts[id]) {
-        idCounts[id]++
-        id = `${id}-${idCounts[id]}`
-      } else {
-        idCounts[id] = 1
-      }
-      
-      // Set the ID on the heading element
-      heading.id = id
-
-      tree.push({
-        level,
-        text,
-        id
-      })
-    })
-
-    // Replace footnote placeholders with clickable spans
-    footnoteRefs.forEach(({ placeholder, id, number }) => {
-      // Find all text nodes and replace placeholders
-      const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, null)
-      
-      const textNodes: Text[] = []
-      let node: Node | null = null
-      while ((node = walker.nextNode())) {
-        if (node.textContent?.includes(placeholder)) {
-          textNodes.push(node as Text)
-        }
-      }
-     
-      textNodes.forEach((textNode) => {
-        const text = textNode.textContent || ''
-        if (text.includes(placeholder)) {
-          const parts = text.split(placeholder)
-          const parent = textNode.parentElement
-          
-          if (parent && parts.length === 2) {
-            // Create text node for part before placeholder
-            const beforeText = doc.createTextNode(parts[0])
-            
-            // Create footnote reference span
-            const span = doc.createElement('span')
-            span.className = 'footnote-ref'
-            span.setAttribute('data-footnote-id', id)
-            span.textContent = number
-            span.setAttribute('role', 'button')
-            span.setAttribute('tabindex', '0')
-            span.setAttribute('aria-label', `Footnote ${number}`)
-            
-            // Create text node for part after placeholder
-            const afterText = doc.createTextNode(parts[1])
-            
-            // Replace the original text node
-            parent.replaceChild(beforeText, textNode)
-            parent.insertBefore(span, beforeText.nextSibling)
-            if (afterText.textContent) {
-              parent.insertBefore(afterText, span.nextSibling)
-            }
-          }
-        }
-      })
+    Object.entries(bookMetadata.footnotes).forEach(([key, value]) => {
+      footnoteMap.set(key, value as Footnote)
     })
 
     setFootnotes(footnoteMap)
+    setContentTree(bookMetadata.contentTree as ContentTreeNode[])
 
-    // Set the HTML content with all IDs properly set
+    // Set the pre-rendered HTML content
     if (contentRef.current) {
-      contentRef.current.innerHTML = doc.body.innerHTML
+      contentRef.current.innerHTML = bookHtml
     }
-
-    setContentTree(tree)
 
     // Restore scroll position after content is rendered
     if (!hasRestoredScroll.current) {
-      const savedPosition = localStorage.getItem('bookScrollPosition')
-      if (savedPosition) {
+      // Check if there's a hash in the URL (paragraph anchor)
+      const hash = window.location.hash
+      if (hash) {
         // Wait for DOM to be ready
         setTimeout(() => {
-          const position = parseInt(savedPosition, 10)
-          if (!isNaN(position)) {
-            window.scrollTo(0, position)
+          const element = document.querySelector(hash)
+          if (element && element.classList.contains('paragraph-with-anchor')) {
+            element.classList.add('paragraph-highlighted')
+            const offset = 20
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+            const offsetPosition = elementPosition - offset
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
           }
           hasRestoredScroll.current = true
         }, 150)
       } else {
-        hasRestoredScroll.current = true
+        const savedPosition = localStorage.getItem('bookScrollPosition')
+        if (savedPosition) {
+          // Wait for DOM to be ready
+          setTimeout(() => {
+            const position = parseInt(savedPosition, 10)
+            if (!isNaN(position)) {
+              window.scrollTo(0, position)
+            }
+            hasRestoredScroll.current = true
+          }, 150)
+        } else {
+          hasRestoredScroll.current = true
+        }
       }
     }
   }, [])
 
-  // Save scroll position
+  // Auto-hide controls logic
   useEffect(() => {
+    const AUTO_HIDE_DELAY = 3000 // 3 seconds
+
+    const isMobile = (): boolean => window.innerWidth <= 768
+
+    const showControls = (): void => {
+      // Don't auto-hide if menu is open
+      if (isMenuOpen) return
+      
+      setControlsVisible(true)
+      
+      // Clear existing timeout
+      if (autoHideTimeoutRef.current) {
+        clearTimeout(autoHideTimeoutRef.current)
+      }
+      
+      // Set new timeout to hide
+      autoHideTimeoutRef.current = setTimeout(() => {
+        // Don't hide if menu is open
+        if (!isMenuOpen) {
+          setControlsVisible(false)
+        }
+      }, AUTO_HIDE_DELAY)
+    }
+
+    const handleMouseMove = (): void => {
+      if (!isMobile()) {
+        showControls()
+      }
+    }
+
+    const handleScrollOrTouch = (): void => {
+      if (isMobile()) {
+        showControls()
+      }
+    }
+
+    // Initial show and timeout
+    showControls()
+
+    // Desktop: show on mouse movement
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+
+    // Mobile: show on scroll or touch
+    window.addEventListener('scroll', handleScrollOrTouch, { passive: true })
+    window.addEventListener('touchstart', handleScrollOrTouch, { passive: true })
+
+    return () => {
+      if (autoHideTimeoutRef.current) {
+        clearTimeout(autoHideTimeoutRef.current)
+      }
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('scroll', handleScrollOrTouch)
+      window.removeEventListener('touchstart', handleScrollOrTouch)
+    }
+  }, [isMenuOpen])
+
+  // Handle hash changes (browser back/forward) and highlight paragraphs
+  useEffect(() => {
+    const updateHighlight = (): void => {
+      // Remove highlight from all paragraphs
+      const allParagraphs = document.querySelectorAll('p.paragraph-with-anchor')
+      allParagraphs.forEach((p) => {
+        p.classList.remove('paragraph-highlighted')
+      })
+
+      // Add highlight to the paragraph matching the hash
+      const hash = window.location.hash
+      if (hash) {
+        const element = document.querySelector(hash)
+        if (element && element.classList.contains('paragraph-with-anchor')) {
+          element.classList.add('paragraph-highlighted')
+          
+          // Scroll to the element
+          const offset = 20
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+          const offsetPosition = elementPosition - offset
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          })
+        }
+      }
+    }
+
+    // Initial highlight check
+    updateHighlight()
+
+    // Handle hash changes
+    window.addEventListener('hashchange', updateHighlight)
+    
+    return () => {
+      window.removeEventListener('hashchange', updateHighlight)
+    }
+  }, [])
+
+  // Save scroll position and calculate reading progress
+  useEffect(() => {
+    const calculateProgress = (): number => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+      if (scrollHeight <= 0) return 0
+      return Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100))
+    }
+
     const handleScroll = (): void => {
+      // Update reading progress immediately for smooth updates
+      setReadingProgress(calculateProgress())
+
       // Debounce scroll position saving
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current)
@@ -198,6 +207,9 @@ export default function App() {
         localStorage.setItem('bookScrollPosition', position.toString())
       }, 250)
     }
+
+    // Calculate initial progress
+    setReadingProgress(calculateProgress())
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     
@@ -222,9 +234,11 @@ export default function App() {
       })
     }
     setIsMenuOpen(false)
+    // Show controls when menu closes
+    setControlsVisible(true)
   }
 
-  // Handle footnote clicks
+  // Handle footnote clicks and paragraph clicks
   useEffect(() => {
     const handleFootnoteClick = (event: MouseEvent): void => {
       const target = event.target as HTMLElement
@@ -262,15 +276,76 @@ export default function App() {
       }
     }
 
+    const handleParagraphClick = (event: MouseEvent): void => {
+      const target = event.target as HTMLElement
+      // Don't update URL if clicking on anchor link or footnote
+      if (target.classList.contains('paragraph-anchor') || target.classList.contains('footnote-ref')) {
+        return
+      }
+
+      // Find the paragraph element
+      const paragraph = target.closest('p.paragraph-with-anchor') as HTMLElement
+      if (paragraph && paragraph.id) {
+        // Remove highlight from all paragraphs
+        const allParagraphs = document.querySelectorAll('p.paragraph-with-anchor')
+        allParagraphs.forEach((p) => {
+          p.classList.remove('paragraph-highlighted')
+        })
+        
+        // Add highlight to clicked paragraph
+        paragraph.classList.add('paragraph-highlighted')
+        
+        // Update URL without page reload
+        const newUrl = `${window.location.pathname}${window.location.search}#${paragraph.id}`
+        window.history.pushState({}, '', newUrl)
+      }
+    }
+
+    const handleAnchorClick = (event: MouseEvent): void => {
+      const target = event.target as HTMLElement
+      if (target.classList.contains('paragraph-anchor')) {
+        event.preventDefault()
+        const href = target.getAttribute('href')
+        if (href) {
+          // Remove highlight from all paragraphs
+          const allParagraphs = document.querySelectorAll('p.paragraph-with-anchor')
+          allParagraphs.forEach((p) => {
+            p.classList.remove('paragraph-highlighted')
+          })
+          
+          // Update URL
+          window.history.pushState({}, '', href)
+          
+          // Scroll to paragraph and add highlight
+          const id = href.substring(1)
+          const element = document.getElementById(id)
+          if (element && element.classList.contains('paragraph-with-anchor')) {
+            element.classList.add('paragraph-highlighted')
+            const offset = 20
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+            const offsetPosition = elementPosition - offset
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
+          }
+        }
+      }
+    }
+
     const contentElement = contentRef.current
     if (contentElement) {
       contentElement.addEventListener('click', handleFootnoteClick)
+      contentElement.addEventListener('click', handleParagraphClick)
+      contentElement.addEventListener('click', handleAnchorClick)
       contentElement.addEventListener('keydown', handleFootnoteKeyPress)
     }
 
     return () => {
       if (contentElement) {
         contentElement.removeEventListener('click', handleFootnoteClick)
+        contentElement.removeEventListener('click', handleParagraphClick)
+        contentElement.removeEventListener('click', handleAnchorClick)
         contentElement.removeEventListener('keydown', handleFootnoteKeyPress)
       }
     }
@@ -280,21 +355,30 @@ export default function App() {
     <div className="app">
       <NavigationMenu
         isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
+        onClose={() => {
+          setIsMenuOpen(false)
+          // Show controls when menu closes
+          setControlsVisible(true)
+        }}
         contentTree={contentTree}
         onNavigate={handleNavigation}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
-      <button
-        className={`hamburger-menu-button ${isMenuOpen ? 'hamburger-menu-button-hidden' : ''}`}
-        onClick={() => setIsMenuOpen(true)}
-        aria-label="Open navigation menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <div className={`top-left-controls ${isMenuOpen ? 'top-left-controls-hidden' : !controlsVisible ? 'top-left-controls-auto-hidden' : ''}`}>
+        <div className="reading-progress">
+          {Math.round(readingProgress)}%
+        </div>
+        <button
+          className="hamburger-menu-button"
+          onClick={() => setIsMenuOpen(true)}
+          aria-label="Open navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
       <div className="book-content" ref={contentRef}></div>
       {activeFootnote && footnotes.has(activeFootnote.id) && (
         <FootnotePopover
