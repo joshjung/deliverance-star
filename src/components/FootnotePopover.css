@@ -1,8 +1,33 @@
+.footnote-popover-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  animation: fadeInBackdrop 0.2s ease-out;
+}
+
+@keyframes fadeInBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .footnote-popover {
   position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 10000;
   max-width: 400px;
   min-width: 250px;
+  max-height: 80vh;
+  overflow-y: auto;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -23,11 +48,11 @@
 @keyframes fadeInPopover {
   from {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translate(-50%, calc(-50% - 5px));
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
   }
 }
 

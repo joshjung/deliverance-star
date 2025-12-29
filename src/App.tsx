@@ -240,10 +240,11 @@ export default function App() {
 
   // Handle footnote clicks and paragraph clicks
   useEffect(() => {
-    const handleFootnoteClick = (event: MouseEvent): void => {
+    const handleFootnoteInteraction = (event: MouseEvent | TouchEvent): void => {
       const target = event.target as HTMLElement
       if (target.classList.contains('footnote-ref')) {
         event.preventDefault()
+        event.stopPropagation()
         const footnoteId = target.getAttribute('data-footnote-id')
         if (footnoteId && footnotes.has(footnoteId)) {
           const rect = target.getBoundingClientRect()
@@ -256,6 +257,14 @@ export default function App() {
           })
         }
       }
+    }
+
+    const handleFootnoteClick = (event: MouseEvent): void => {
+      handleFootnoteInteraction(event)
+    }
+
+    const handleFootnoteTouch = (event: TouchEvent): void => {
+      handleFootnoteInteraction(event)
     }
 
     const handleFootnoteKeyPress = (event: KeyboardEvent): void => {
@@ -336,6 +345,7 @@ export default function App() {
     const contentElement = contentRef.current
     if (contentElement) {
       contentElement.addEventListener('click', handleFootnoteClick)
+      contentElement.addEventListener('touchstart', handleFootnoteTouch, { passive: false })
       contentElement.addEventListener('click', handleParagraphClick)
       contentElement.addEventListener('click', handleAnchorClick)
       contentElement.addEventListener('keydown', handleFootnoteKeyPress)
@@ -344,6 +354,7 @@ export default function App() {
     return () => {
       if (contentElement) {
         contentElement.removeEventListener('click', handleFootnoteClick)
+        contentElement.removeEventListener('touchstart', handleFootnoteTouch)
         contentElement.removeEventListener('click', handleParagraphClick)
         contentElement.removeEventListener('click', handleAnchorClick)
         contentElement.removeEventListener('keydown', handleFootnoteKeyPress)
@@ -379,11 +390,10 @@ export default function App() {
           <span></span>
         </button>
       </div>
-      <div className="book-content" ref={contentRef}></div>
+      <div className={`book-content ${activeFootnote ? 'book-content-dimmed' : ''}`} ref={contentRef}></div>
       {activeFootnote && footnotes.has(activeFootnote.id) && (
         <FootnotePopover
           content={footnotes.get(activeFootnote.id)!.content}
-          position={activeFootnote.position}
           onClose={() => setActiveFootnote(null)}
           theme={theme}
         />

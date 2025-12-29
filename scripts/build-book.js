@@ -16,10 +16,9 @@ const bookContent = readFileSync(join(rootDir, 'book.md'), 'utf-8')
 
 // Extract footnotes
 const footnoteMap = new Map()
-const footnoteDefPattern = FOOTNOTE_CONTENT_REGEX
 let defMatch
 
-while ((defMatch = footnoteDefPattern.exec(bookContent)) !== null) {
+while ((defMatch = FOOTNOTE_CONTENT_REGEX.exec(bookContent)) !== null) {
   const footnoteNumber = defMatch[1]
   const footnoteId = `fn${footnoteNumber}`
   const footnoteContent = defMatch[2].trim()
@@ -92,7 +91,8 @@ headings.forEach((heading) => {
 })
 
 // Replace footnote placeholders with clickable spans
-footnoteRefs.forEach(({ placeholder, id, number }) => {
+// We have to reverse so we don't greedily match the 1 footnote when we should match 10
+footnoteRefs.reverse().forEach(({ placeholder, id, number }) => {
   // Find all text nodes and replace placeholders
   const walker = doc.createTreeWalker(doc.body, dom.window.NodeFilter.SHOW_TEXT, null)
   
