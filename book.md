@@ -1503,7 +1503,7 @@ Our eyes strained to keep up with its movement, and after a moment we both looke
 
 The objects flew out of sight. For the next few minutes, I continued to scan the sky, I was shocked to see something that allowed me to capture a truly incredible photo:
 
-PHOTO
+![Contrail shadow](https://www.deliverancestar.com/IMG_2222.jpg)
 
 For a moment, I did not believe my eyes. An airplane gently flew across the sky with a long white contrail. But in front of the airplane against the blue of the sky, all the way to the horizon, lay a dark black line. An internal voice spoke softly to my soul: _“Josh, this is what your life is like.”_ Jason and I both looked at that strange sight until the airplane flew out of view.
 
@@ -1931,7 +1931,7 @@ That following night, Monday, September 30, 2019, I sheepishly returned to churc
 
 Pastor Jim got up to give his first part of the spiritual warfare series. When he did, he flipped to his first slide and against a bright blue background was the single word in all capital letters: DELIVERANCE.
 
-PHOTO
+![Deliverance powerpoint slide](https://www.deliverancestar.com/IMG_3169.jpg)
 
 In a rush of emotions impossible to explain, I felt like a roomful of angels was staring at me with bated breath. I nearly fell out of my chair. This was the sign. This was the word that I had written in my journal only a couple of weeks before:
 

@@ -19,10 +19,15 @@ export default function App() {
   const [activeFootnote, setActiveFootnote] = useState<{ id: string; position: { x: number; y: number } } | null>(null)
   const [readingProgress, setReadingProgress] = useState<number>(0)
   const [controlsVisible, setControlsVisible] = useState<boolean>(true)
+  const [showCopyToast, setShowCopyToast] = useState<boolean>(false)
+  const [showLocationSavedToast, setShowLocationSavedToast] = useState<boolean>(false)
   const contentRef = useRef<HTMLDivElement>(null)
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const hasRestoredScroll = useRef<boolean>(false)
   const autoHideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const copyToastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const locationSavedToastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const hasShownLocationSavedToast = useRef<boolean>(false)
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -197,6 +202,29 @@ export default function App() {
       // Update reading progress immediately for smooth updates
       setReadingProgress(calculateProgress())
 
+      // Check if there's a highlighted paragraph and if it's still visible
+      const hash = window.location.hash
+      if (hash) {
+        const highlightedElement = document.querySelector(hash)
+        if (highlightedElement && highlightedElement.classList.contains('paragraph-with-anchor')) {
+          const rect = highlightedElement.getBoundingClientRect()
+          const isVisible = rect.top < window.innerHeight && rect.bottom > 0
+          
+          // If the highlighted paragraph is off-screen, clear the selection
+          if (!isVisible) {
+            // Remove highlight from all paragraphs
+            const allParagraphs = document.querySelectorAll('p.paragraph-with-anchor')
+            allParagraphs.forEach((p) => {
+              p.classList.remove('paragraph-highlighted')
+            })
+            
+            // Remove hash from URL without page reload
+            const newUrl = `${window.location.pathname}${window.location.search}`
+            window.history.replaceState({}, '', newUrl)
+          }
+        }
+      }
+
       // Debounce scroll position saving
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current)
@@ -205,6 +233,19 @@ export default function App() {
       scrollTimeoutRef.current = setTimeout(() => {
         const position = window.scrollY || document.documentElement.scrollTop
         localStorage.setItem('bookScrollPosition', position.toString())
+        // Show toast notification only the first time on this page load
+        if (!hasShownLocationSavedToast.current) {
+          setShowLocationSavedToast(true)
+          hasShownLocationSavedToast.current = true
+          // Clear existing timeout
+          if (locationSavedToastTimeoutRef.current) {
+            clearTimeout(locationSavedToastTimeoutRef.current)
+          }
+          // Hide toast after 5 seconds
+          locationSavedToastTimeoutRef.current = setTimeout(() => {
+            setShowLocationSavedToast(false)
+          }, 5000)
+        }
       }, 250)
     }
 
@@ -217,6 +258,9 @@ export default function App() {
       window.removeEventListener('scroll', handleScroll)
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current)
+      }
+      if (locationSavedToastTimeoutRef.current) {
+        clearTimeout(locationSavedToastTimeoutRef.current)
       }
     }
   }, [])
@@ -310,7 +354,7 @@ export default function App() {
       }
     }
 
-    const handleAnchorClick = (event: MouseEvent): void => {
+    const handleAnchorClick = async (event: MouseEvent): Promise<void> => {
       const target = event.target as HTMLElement
       if (target.classList.contains('paragraph-anchor')) {
         event.preventDefault()
@@ -322,8 +366,47 @@ export default function App() {
             p.classList.remove('paragraph-highlighted')
           })
           
+          // Build full URL
+          const fullUrl = `${window.location.origin}${window.location.pathname}${window.location.search}${href}`
+          
           // Update URL
           window.history.pushState({}, '', href)
+          
+          // Copy to clipboard
+          try {
+            await navigator.clipboard.writeText(fullUrl)
+            // Show toast notification
+            setShowCopyToast(true)
+            // Clear existing timeout
+            if (copyToastTimeoutRef.current) {
+              clearTimeout(copyToastTimeoutRef.current)
+            }
+            // Hide toast after 2 seconds
+            copyToastTimeoutRef.current = setTimeout(() => {
+              setShowCopyToast(false)
+            }, 2000)
+          } catch (err) {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea')
+            textArea.value = fullUrl
+            textArea.style.position = 'fixed'
+            textArea.style.opacity = '0'
+            document.body.appendChild(textArea)
+            textArea.select()
+            try {
+              document.execCommand('copy')
+              setShowCopyToast(true)
+              if (copyToastTimeoutRef.current) {
+                clearTimeout(copyToastTimeoutRef.current)
+              }
+              copyToastTimeoutRef.current = setTimeout(() => {
+                setShowCopyToast(false)
+              }, 2000)
+            } catch (fallbackErr) {
+              console.error('Failed to copy URL:', fallbackErr)
+            }
+            document.body.removeChild(textArea)
+          }
           
           // Scroll to paragraph and add highlight
           const id = href.substring(1)
@@ -358,6 +441,9 @@ export default function App() {
         contentElement.removeEventListener('click', handleParagraphClick)
         contentElement.removeEventListener('click', handleAnchorClick)
         contentElement.removeEventListener('keydown', handleFootnoteKeyPress)
+      }
+      if (copyToastTimeoutRef.current) {
+        clearTimeout(copyToastTimeoutRef.current)
       }
     }
   }, [footnotes])
@@ -397,6 +483,16 @@ export default function App() {
           onClose={() => setActiveFootnote(null)}
           theme={theme}
         />
+      )}
+      {showCopyToast && (
+        <div className="copy-toast">
+          The location in the book has been copied to the clipboard
+        </div>
+      )}
+      {showLocationSavedToast && (
+        <div className="location-saved-toast">
+          Book location is saved automatically as you scroll. You can safely leave the page and come back later.
+        </div>
       )}
     </div>
   )

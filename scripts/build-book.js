@@ -156,7 +156,7 @@ paragraphs.forEach((paragraph) => {
   const anchor = doc.createElement('a')
   anchor.href = `#${paragraphId}`
   anchor.className = 'paragraph-anchor'
-  anchor.setAttribute('aria-label', 'Link to this paragraph')
+  anchor.setAttribute('aria-label', 'Share this paragraph')
   anchor.innerHTML = '🔗'
   anchor.setAttribute('title', 'Copy link to this paragraph')
 
