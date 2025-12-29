@@ -29,7 +29,7 @@ Surveying the crowd of mourners, my attention was drawn to one young man, who wa
 
 Immediately and without hesitation, he turned around and glared straight into my eyes, shrugged his shoulders, and mouthed the word _What?_
 
-Did he read my mind? Startled, I turned to see who he was looking at—I did not believe that he was looking at me. But there was nobody between me and the back of the sanctuary who was even remotely looking his way. I turned back to him, and he caught my eyes and for a second time, shrugged, and mouthed the word What? Then, he lightly smiled and turned to face the front of the sanctuary, while I shrunk terrified into the pew.
+Did he read my mind? Startled, I turned to see who he was looking at—I did not believe that he was looking at me. But there was nobody between me and the back of the sanctuary who was even remotely looking his way. I turned back to him, and he caught my eyes and for a second time, shrugged, and mouthed the word _What?_ Then, he lightly smiled and turned to face the front of the sanctuary, while I shrunk terrified into the pew.
 
 # Chapter 1 - About this Book
 
@@ -183,7 +183,7 @@ As the next year passed, the Christian teaching our church embraced became, to q
 
 [4]:Doctrine is a word used in Christian religious settings to refer to religious claims. “Correct doctrine” implies accuracy in teaching, although proving which claims are accurate is oftentimes futile.[/4]
 
-We spent a lot of time in Bible study, and I began developing some skill in Bible interpretation. I began to use read Bible commentaries and learned about historical protestant theologians. I was drawn into frequent, deep discussions on topics like soteriology (the study of salvation), eschatology (the study of the end times), and which passages of the Bible were allegorical or literal.
+We spent a lot of time in Bible study, and I began developing some skill in Bible interpretation. I began to use Bible commentaries and learned about historical protestant theologians. I was drawn into frequent, deep discussions on topics like soteriology (the study of salvation), eschatology (the study of the end times), and which passages of the Bible were allegorical or literal.
 
 Studying these things was interesting, but I had this nagging feeling that we were missing out on real interactions from the spiritual realm. Where were these angels and demons and miracles and supernatural events that the Bible speaks of?
 
