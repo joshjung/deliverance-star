@@ -5,9 +5,9 @@ Joshua Jung
 
 As a child, Joshua Jung started having profound spiritual experiences. Despite this, after extensive study he became an atheist. But just before embracing secularism, he prayed one last prayer challenging anything supernatural for a sign. Ten years later, he received a deluge of supernatural experiences that not only answered that prayer directly, but led him to the last place he ever wanted to go.
 
-Everything is this story actually happened and I use pseudonyms heavily in this book to protect privacy.
+Everything in this story actually happened and I use pseudonyms heavily in this book to protect privacy.
 
-This book is not intended for children, as it contains intellectual, heavy, and adult themes. For a lighter version of this story suitable for kids, [I recommend listening to my testimony on the Touched by Heaven podcast](https://youtu.be/QilmEV1YwDs?si=BxTWJfjCyOlQNwv4).
+This book is not recommended for children under the age of 14, as it contains intellectual, heavy, and adult themes. For a lighter version of this story suitable for a younger audience, [I recommend listening to my testimony on the Touched by Heaven podcast](https://youtu.be/QilmEV1YwDs?si=BxTWJfjCyOlQNwv4).
 
 Draft Edition
 
