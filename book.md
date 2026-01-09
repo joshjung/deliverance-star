@@ -13,6 +13,26 @@ Draft Edition
 
 Copyright © 2026, all rights reserved
 
+# Acknowledgements
+
+This book would not be possible without God answering my prayers directly and angels intervening back in 2019. And that, of course, was dependent entirely on Jesus for showing up on this planet two-thousand years ago and submitting to the horrendous death that was for all of us. A massive thanks to the entire host of heaven, and a special thanks to Padre Pio who makes a resounding appearance in this book.
+
+A huge thanks to my parents and extended family for pushing me to learn about Christianity from a young age. This book covers a lot of painful topics related to my upbringing. My parents grew up in an era and a Christian tradition that did not have ready access to resources needed to deal with the spiritual experiences that I encountered. They have, to my joy and their credit, come around and have apologized for their misunderstanding in some of the incidents recorded in this book. An entire generation within western Christianity was taught an intellectual Christianity that saw spiritual experiences as mostly a thing of the past. Please bear that in mind as you read. I leave the difficult parts of my story in this book as a reminder to every one of the mechanisms by which the devil can take foothold in our lives. We all are responsible in our own ways.
+
+A big thanks to Rodney for being the stranger and witness in the miraculous answer to my prayer.
+
+Thank you, Jim Reimer, for just teaching at New Life church in Stockholm in 2019, completely oblivious to the miracle that was happening in that chair in the back.
+
+Thank you to the leadership at New Life church in Stockholm for just existing and being faithful. Out of all churches on the planet, God pushed me across the world to go to your church through a divine sign in the sky.
+
+A resounding thanks to Steve and Deb Friesen, whose support over the years was the greatest example of never losing hope. They would engage me in any conversation, they listened, and despite not agreeing for years when I was an atheist, they still loved and supported me.
+
+A thanks to my editor, Aaron Wedemeyer, who was divinely planted in my life at just the right time. Your endless corrections helped me massively to become a better writer and without you this would have never been published.
+
+A big thanks to Steve Szabo for your spiritual support. Thanks to Rick Dzurik for the multiple times you have spoken through the Spirit to me. To Maria for pushing me to go back to that AirBnB and gifting me your rosary and so much more.  To my cousin Diane and her wonderful husband Darin for years of spiritual support when I was abandoned by so many.
+
+To the Christians who did not give up on me while I was an atheist, I can’t wait to reminisce with you on earth or in heaven. And for everyone mentioned in this book, know that I have prayed for every one of you countless times and have every ounce of love for you.
+
 # Preface
 
 Grieving people drifted into the small sanctuary at the Kansas City mortuary, talking to their loved ones in hushed tones. Up front, an open casket held a young woman, considerable makeup hiding the gunshot wound that had taken her life. Kids and adults alike grappled to comprehend the horror of what had happened, and few in the room knew the long-term effects the murder would have on hundreds, perhaps thousands, of people. Nobody could have anticipated the unfolding story’s potential to reach tens of thousands of people. Even more importantly, few present – including me – were aware of what was occurring in the spiritual realm that weekend.
