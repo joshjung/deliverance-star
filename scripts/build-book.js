@@ -8,8 +8,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const rootDir = join(__dirname, '..')
 
-const FOOTNOTE_REF_REGEX = /\[\^(\d+)\]/g // [^1]
-const FOOTNOTE_CONTENT_REGEX = /\[(\d+)\]:([^\[]*?)\[\/(\d+)\]/g // [1]: content [/1]
+const FOOTNOTE_REF_REGEX = /\|\^(\d+)\|/g // |^1|
+const FOOTNOTE_CONTENT_REGEX = /\|(\d+)\|:([^\|]*?)\|\/(\d+)\|/g // |1|: content |/1|
 
 // Read the markdown file
 const bookContent = readFileSync(join(rootDir, 'book.md'), 'utf-8')
