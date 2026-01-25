@@ -218,19 +218,19 @@
 		opacity 0.2s ease,
 		font-size 0.3s ease;
 	font-family: Georgia, serif;
-	font-size: 14.5px; /* medium default */
+	font-size: 20px; /* medium default */
 }
 
 [data-font-size="small"] .book-content {
-	font-size: 11.8px;
+	font-size: 16.3px;
 }
 
 [data-font-size="medium"] .book-content {
-	font-size: 14.5px;
+	font-size: 20px;
 }
 
 [data-font-size="large"] .book-content {
-	font-size: 17.3px;
+	font-size: 23.9px;
 }
 
 .book-content-dimmed {

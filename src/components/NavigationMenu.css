@@ -60,7 +60,7 @@
 }
 
 .nav-header h2 {
-  font-size: 1.25em;
+  font-size: 1.35em;
   font-weight: 600;
   color: #333333;
   margin: 0;
@@ -155,7 +155,7 @@
 .nav-item-text {
   display: block;
   color: #333333;
-  font-size: 0.95em;
+  font-size: 1.05em;
   padding: 3px 6px;
   line-height: 1.5;
   word-wrap: break-word;
@@ -168,7 +168,7 @@
 
 .nav-level-1 {
   font-weight: 600;
-  font-size: 1.05em;
+  font-size: 1.15em;
 }
 
 .nav-level-2 {
@@ -190,7 +190,7 @@
 .nav-level-6 {
   font-weight: 400;
   color: #666666;
-  font-size: 0.9em;
+  font-size: 1em;
   transition: color 0.3s ease;
 }
 
@@ -222,7 +222,7 @@
   }
 
   .nav-header h2 {
-    font-size: 1.1em;
+    font-size: 1.2em;
   }
 
   .nav-item {
@@ -230,6 +230,6 @@
   }
 
   .nav-item-text {
-    font-size: 0.9em;
+    font-size: 1em;
   }
 }
