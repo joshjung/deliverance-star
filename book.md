@@ -633,7 +633,7 @@ A second major problem concerns the timing, method, and transmission of the writ
 
 |15|:One potential example of this is that the authors of Matthew and Luke apparently both knew about Mark but never fact checked their writings with each other! As a result, you end up with two completely different genealogies and no recognition the other list even existed.|/15|
 
-|16|:It is worth noting that the major themes of Jesus’ life remain constant in all known manuscripts of the four gospels, and manuscript differences usually involve minor editing errors. See Misquoting Jesus: The Story Behind Who Changed the Bible and Why or The Orthodox Corruption of Scripture: The Effect of Early Christological Controversies on the Text of the New Testament by Bart Ehrman, which provide the most compelling examples of scribal tampering.|/16|
+|16|:It is worth noting that the major themes of Jesus’ life remain constant in all known manuscripts of the four gospels, and manuscript differences usually involve minor editing errors. See _Misquoting Jesus: The Story Behind Who Changed the Bible and Why or The Orthodox Corruption of Scripture: The Effect of Early Christological Controversies on the Text of the New Testament_ by Bart Ehrman, which provide the most compelling examples of scribal tampering.|/16|
 
 A third major problem with the miraculous claims of the gospels is that the gospels themselves contain significant differences. For example, the timeline in the Gospel of John varies quite a bit with the timelines found in Mark, Matthew, and Luke. Additionally, a careful reading of what are dubbed the Synoptic Gospels of Mark, Matthew, and Luke reveals that they clearly were sourced from the same material; however, Matthew and Luke sometimes seem to add information that seems suspect.
 
@@ -1562,7 +1562,7 @@ The next day, her family had a meeting, and her parents admitted they had been e
 
 At the same time, I was reading the memoire of the famous psychotherapist Carl Jung |^24|. To my surprise, Carl Jung had numerous paranormal experiences. One of the stories recorded in his autobiography is that of his daughter being woken up in the night terrified and her sheets and blanket being thrown across the room by an unseen force. This incident would have happened in the middle of the 1900s.
 
-|24|:Carl Jung tells of dozens of paranormal or synchronous experiences in his life in his autobiography Memories, Dreams, and Reflections.|/24|
+|24|:Carl Jung tells of dozens of paranormal or synchronous experiences in his life in his autobiography _Memories, Dreams, and Reflections_.|/24|
 
 I remember being dumbstruck by the similarity of these two stories. How was it possible that roughly fifty years apart, two separate individuals - a world-renowned psychotherapist and a young makeup artist - recounted the exact same type of paranormal experience with bedsheets being flung across the room by an invisible force? And to top it off, they were both describing the feeling of a dark presence in the room which was identical to what I had experienced! I was quite certain this young makeup artist had never read Carl Jung’s story. It was impossible that Carl Jung’s story was influenced by the girl. Neither of them knew about me. In conclusion, they both were likely telling the truth. But in their stories, a physical poltergeist was associated with the presence of this being providing solid evidence this was not just occurring in our minds.
 
