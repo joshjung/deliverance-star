@@ -6,11 +6,9 @@ interface NavigationMenuProps {
   onClose: () => void
   contentTree: ContentTreeNode[]
   onNavigate: (id: string) => void
-  theme: 'light' | 'dark'
-  onToggleTheme: () => void
 }
 
-function NavigationMenu({ isOpen, onClose, contentTree, onNavigate, theme, onToggleTheme }: NavigationMenuProps) {
+function NavigationMenu({ isOpen, onClose, contentTree, onNavigate }: NavigationMenuProps) {
   if (!isOpen) return null
 
   const handleItemClick = (id: string): void => {
@@ -40,14 +38,6 @@ function NavigationMenu({ isOpen, onClose, contentTree, onNavigate, theme, onTog
         <div className="nav-header">
           <h2>Deliverance Star</h2>
           <div className="nav-header-actions">
-            <button
-              className="theme-toggle"
-              onClick={onToggleTheme}
-              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            >
-              {theme === 'light' ? '🌙' : '☀️'}
-            </button>
             <button className="nav-close-button" onClick={onClose} aria-label="Close menu">
               ×
             </button>
