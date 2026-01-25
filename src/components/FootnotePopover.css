@@ -24,6 +24,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10000;
+  width: 90vw;
   max-width: 900px;
   min-width: 250px;
   max-height: 80vh;
@@ -124,7 +125,7 @@
 /* Mobile styles */
 @media (max-width: 768px) {
   .footnote-popover {
-    max-width: calc(100vw - 40px);
+    max-width: 90vw;
     min-width: 200px;
     padding: 20px;
   }
