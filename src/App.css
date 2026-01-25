@@ -251,6 +251,9 @@
 	scroll-margin-top: 80px;
 	color: #333333;
 	transition: color 0.3s ease;
+	max-width: 100%;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 [data-theme="dark"] .book-content h1 {
@@ -266,6 +269,9 @@
 	scroll-margin-top: 80px;
 	color: #333333;
 	transition: color 0.3s ease;
+	max-width: 100%;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 [data-theme="dark"] .book-content h2 {
@@ -281,6 +287,9 @@
 	scroll-margin-top: 80px;
 	color: #333333;
 	transition: color 0.3s ease;
+	max-width: 100%;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 [data-theme="dark"] .book-content h3 {
@@ -295,6 +304,9 @@
 	scroll-margin-top: 80px;
 	color: #333333;
 	transition: color 0.3s ease;
+	max-width: 100%;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 [data-theme="dark"] .book-content h4 {
@@ -309,6 +321,9 @@
 	scroll-margin-top: 80px;
 	color: #333333;
 	transition: color 0.3s ease;
+	max-width: 100%;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 [data-theme="dark"] .book-content h5 {
@@ -323,6 +338,9 @@
 	scroll-margin-top: 80px;
 	color: #333333;
 	transition: color 0.3s ease;
+	max-width: 100%;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 [data-theme="dark"] .book-content h6 {
