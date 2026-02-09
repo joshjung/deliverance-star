@@ -34,7 +34,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   padding: 24px;
-  font-size: 20px; /* medium default */
+  font-size: 23px; /* medium default */
   line-height: 1.6;
   animation: fadeInPopover 0.2s ease-out;
   font-family: Georgia, serif;
@@ -42,15 +42,15 @@
 }
 
 [data-font-size="small"] .footnote-popover {
-  font-size: 16.3px;
+  font-size: 18.8px;
 }
 
 [data-font-size="medium"] .footnote-popover {
-  font-size: 20px;
+  font-size: 23px;
 }
 
 [data-font-size="large"] .footnote-popover {
-  font-size: 23.9px;
+  font-size: 27.5px;
 }
 
 .footnote-popover-dark {
@@ -94,7 +94,7 @@
   right: 8px;
   background: none;
   border: none;
-  font-size: 1.5em;
+  font-size: 1.73em;
   color: #666666;
   cursor: pointer;
   padding: 0;
@@ -131,14 +131,14 @@
   }
 
   [data-font-size="small"] .footnote-popover {
-    font-size: 16.3px;
+    font-size: 16px;
   }
 
   [data-font-size="medium"] .footnote-popover {
-    font-size: 20px;
+    font-size: 19.6px;
   }
 
   [data-font-size="large"] .footnote-popover {
-    font-size: 23.9px;
+    font-size: 23.4px;
   }
 }

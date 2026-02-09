@@ -22,7 +22,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
+  width: 500px;
   max-width: 85vw;
   height: 100vh;
   background-color: #FFFACD;
@@ -60,7 +60,7 @@
 }
 
 .nav-header h2 {
-  font-size: 1.35em;
+  font-size: 1.55em;
   font-weight: 600;
   color: #333333;
   margin: 0;
@@ -80,7 +80,7 @@
 .theme-toggle {
   background: none;
   border: none;
-  font-size: 1.5em;
+  font-size: 1.73em;
   cursor: pointer;
   padding: 4px 8px;
   display: flex;
@@ -103,7 +103,7 @@
 .nav-close-button {
   background: none;
   border: none;
-  font-size: 2em;
+  font-size: 2.3em;
   color: #666666;
   cursor: pointer;
   padding: 0;
@@ -155,7 +155,7 @@
 .nav-item-text {
   display: block;
   color: #333333;
-  font-size: 1.05em;
+  font-size: 1.21em;
   padding: 3px 6px;
   line-height: 1.5;
   word-wrap: break-word;
@@ -168,7 +168,7 @@
 
 .nav-level-1 {
   font-weight: 600;
-  font-size: 1.15em;
+  font-size: 1.32em;
 }
 
 .nav-level-2 {
@@ -190,7 +190,7 @@
 .nav-level-6 {
   font-weight: 400;
   color: #666666;
-  font-size: 1em;
+  font-size: 1.15em;
   transition: color 0.3s ease;
 }
 
@@ -214,7 +214,7 @@
 /* Mobile styles */
 @media (max-width: 768px) {
   .nav-menu {
-    width: 280px;
+    width: 470px;
   }
 
   .nav-header {
@@ -222,7 +222,7 @@
   }
 
   .nav-header h2 {
-    font-size: 1.2em;
+    font-size: 1.17em;
   }
 
   .nav-item {
@@ -230,6 +230,6 @@
   }
 
   .nav-item-text {
-    font-size: 1em;
+    font-size: 0.98em;
   }
 }
